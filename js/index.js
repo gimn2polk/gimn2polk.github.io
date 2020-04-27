@@ -46,7 +46,7 @@ function loadDatabase() {
                     '   <p class="name">' + name + '<span>' + lived + '</span></p>' + (text === undefined ? "" :
                     '   <div class="pd">' +
                     '    ' + text +
-                    '   <br><br><a href="#more" class="more-button">Подробнее</a></div>') +
+                    '   <br><br><a class="more-button">Подробнее</a></div>') +
                     ' </div>' +
                     '</div>'});
         });
@@ -69,6 +69,7 @@ function showInfo(ded) {
     document.getElementById('more-name').innerHTML = ded.dataset.name;
     document.getElementById('more-lived').innerHTML = '(' + ded.dataset.lived + ')';
     document.getElementById('more-text').innerHTML = ded.dataset.full;
+    location.href = '#more';
     document.getElementById('more-wrapper').scrollIntoView();
 }
 
@@ -77,6 +78,13 @@ function parseDed() {
         btn.addEventListener('click', () => {
             (function () {
                 showInfo(btn.parentElement.parentElement);
+            })()
+        });
+    });
+    document.querySelectorAll('.ded > img').forEach((img) => {
+        img.addEventListener('click', () => {
+            (function () {
+                showInfo(img.parentElement);
             })()
         });
     });

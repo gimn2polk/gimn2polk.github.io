@@ -156,10 +156,7 @@ body {
     background-color: white;
     height: 100%;
     position: relative;
-    margin: 5px;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    outline: orange solid 5px;
 }
 
 @media (min-width: 60em) {
@@ -169,6 +166,7 @@ body {
         max-height: 57em;
         max-width: 66em;
         width: 85%;
+        outline: orange solid 5px;
     }
 
     #more-portrait {
