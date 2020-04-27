@@ -1,0 +1,218 @@
+/**
+ * April 25, 2020
+ * Copyright, Mikhail K., 2020
+ */
+
+body {
+    background: url(../images/background.png) no-repeat center center fixed;
+    background-size: cover;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background: orange;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: darkorange;
+}
+
+#container {
+    margin: 25px;
+    position: relative;
+    text-align: center;
+    vertical-align: center;
+}
+
+.ded-wrapper {
+    position: relative;
+    display: inline-block;
+    padding: 0 40px 0 185px;
+    height: 500px;
+}
+
+@media only screen and (max-width: 992px) {
+    .ded-wrapper {
+        padding: 0 210px 0 0;
+        margin-bottom: -80px;
+    }
+}
+
+.ded {
+    border: orange solid 1px;
+    width: 200px;
+    height: auto;
+    min-height: 380px;
+    padding: 5px;
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    transition: .2s;
+    position: absolute;
+    background: whitesmoke;
+    overflow: auto;
+    top: 0;
+    left: 0;
+}
+
+.ded:hover {
+    border: coral solid 2px;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
+    transform: scale(1.175);
+    z-index: 100;
+}
+
+.ded:hover > img {
+    transform: scale(1.05);
+}
+
+.ded:hover > .pd {
+    max-height: unset;
+    transition: max-height 0.25s ease-in;
+    padding-bottom: 10px;
+}
+
+.ded > img {
+    margin-top: 5px;
+    width: 190px;
+    height: 260px;
+    transition: .2s;
+    cursor: pointer;
+}
+
+.ded > .name {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+.ded > .name > span {
+    font-size: 12px;
+    font-weight: normal;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+.ded > .name > span:before {
+    content: '\A';
+    white-space: pre;
+}
+
+.ded > .pd {
+    max-height: 0;
+    overflow: hidden;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+}
+
+.more-button {
+    margin-top: 20px;
+    padding: 6px 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    font-size: 12px;
+    background: orange;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    cursor: pointer;
+}
+
+.more-button:hover {
+    background: coral;
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.3);
+    transition: .2s;
+}
+
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.8);
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    z-index: -1;
+    display: none;
+}
+
+.modal-overlay:target {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 99999;
+}
+
+.modal-overlay .modal {
+    background-color: white;
+    height: 100%;
+    position: relative;
+    margin: 5px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    outline: orange solid 5px;
+}
+
+@media (min-width: 60em) {
+    .modal-overlay .modal {
+        height: 75%;
+        margin: 5% auto;
+        max-height: 57em;
+        max-width: 66em;
+        width: 85%;
+    }
+
+    #more-portrait {
+        width: 25% !important;
+    }
+}
+
+.modal-overlay .modal > .modal-content-wrapper {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-overlay .close {
+    background-color: orange;
+    color: white;
+    font-size: 26px;
+    padding: 8px 16px;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    text-decoration: none;
+    top: 0;
+    z-index: 1;
+    font-family: monospace;
+}
+
+.modal-overlay .close:hover {
+    background-color: coral;
+    transition: .2s;
+}
+
+#more-name {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+#more-lived {
+    font-size: 18px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+#more-text {
+    font-size: 18px;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+}
