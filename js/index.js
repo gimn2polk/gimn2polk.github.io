@@ -27,7 +27,7 @@ function loadJSON(path, success, error) {
 
 function loadDatabase() {
     let container = document.getElementById('container');
-    container.innerHTML = 'Загрузка...';
+    container.innerHTML = 'Загрузка базы данных, пожалуйста, подождите...';
     loadJSON(database, (data) => {
         container.innerHTML = '';
         let gallery = [];
@@ -42,8 +42,10 @@ function loadDatabase() {
             gallery.push({name: name, value:
                     '<div class="ded-wrapper">' +
                     ' <div class="ded" data-name="' + name + '" data-lived="' + ded.lived + '" data-full="' + full + '">' +
-                    '   <img src="portraits/' + name + '.png"  alt="' + name + ' ' + lived +'"/>' +
-                    '   <p class="name">' + name + '<span>' + lived + '</span></p>' + (text === undefined ? "" :
+                    '   <div class="portrait">' +
+                    '    <img src="portraits/' + name + '.png"  alt="' + name + ' ' + lived +'"/>' +
+                    '    <p class="name">' + name + '<span>' + lived + '</span></p>' +
+                    '    <a class="more-button">Подробнее</a></div>' + (text === undefined ? "" :
                     '   <div class="pd">' +
                     '    ' + text +
                     '   <br><br><a class="more-button">Подробнее</a></div>') +
@@ -74,20 +76,34 @@ function showInfo(ded) {
 }
 
 function parseDed() {
-    document.querySelectorAll('.ded > .pd > .more-button').forEach((btn) => {
+    let container = document.getElementById('container');
+    let scroll = (e) => {
+        console.log(location.href);
+        if(location.hash === '#more') {
+            return;
+        }
+        let delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+        container.scrollLeft -= (delta*50);
+        e.preventDefault();
+    };
+    document.addEventListener('mousewheel', scroll, false);
+    document.addEventListener('DOMMouseScroll', scroll, false);
+    document.querySelectorAll('.more-button').forEach((btn) => {
         btn.addEventListener('click', () => {
             (function () {
                 showInfo(btn.parentElement.parentElement);
             })()
         });
     });
-    document.querySelectorAll('.ded > img').forEach((img) => {
+    /*document.querySelectorAll('.ded > img').forEach((img) => {
         img.addEventListener('click', () => {
             (function () {
-                //showInfo(img.parentElement);
+                if(img.parentElement.matches(':hover')) {
+                    showInfo(img.parentElement);
+                }
             })()
         });
-    });
+    });*/
 }
 
 window.onload = () => {

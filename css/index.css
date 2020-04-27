@@ -24,25 +24,25 @@ body {
     background: darkorange;
 }
 
+#app {
+    max-width: 90%;
+    text-align: center;
+    margin: 0 auto;
+}
+
 #container {
     margin: 25px;
     position: relative;
     text-align: center;
     vertical-align: center;
+    max-width: 100%;
 }
 
 .ded-wrapper {
     position: relative;
-    display: inline-block;
+    display: table-cell;
     padding: 0 40px 0 185px;
     height: 500px;
-}
-
-@media only screen and (max-width: 992px) {
-    .ded-wrapper {
-        padding: 0 210px 0 0;
-        margin-bottom: -80px;
-    }
 }
 
 .ded {
@@ -68,17 +68,17 @@ body {
     z-index: 100;
 }
 
-.ded:hover > img {
+.ded:hover img {
     transform: scale(1.05);
 }
 
-.ded:hover > .pd {
+.ded:hover .pd {
     max-height: unset;
-    transition: max-height 0.25s ease-in;
     padding-bottom: 10px;
+    float: right;
 }
 
-.ded > img {
+.ded img {
     margin-top: 5px;
     width: 190px;
     height: 260px;
@@ -86,25 +86,27 @@ body {
     cursor: pointer;
 }
 
-.ded > .name {
+.ded .name {
     text-align: center;
     font-weight: bold;
     font-size: 16px;
     font-family: Verdana, Geneva, sans-serif;
 }
 
-.ded > .name > span {
+.ded .name > span {
     font-size: 12px;
     font-weight: normal;
     font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
-.ded > .name > span:before {
+.ded .name > span:before {
     content: '\A';
     white-space: pre;
 }
 
 .ded > .pd {
+    transition: max-height 0.25s ease-in;
+    font-size: 14px;
     max-height: 0;
     overflow: hidden;
     font-family: Tahoma, Verdana, Segoe, sans-serif;
@@ -121,12 +123,12 @@ body {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     font-family: 'Helvetica', 'Arial', sans-serif;
     cursor: pointer;
+    transition: .2s;
 }
 
 .more-button:hover {
     background: coral;
     box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.3);
-    transition: .2s;
 }
 
 .modal-overlay {
@@ -138,8 +140,6 @@ body {
     position: fixed;
     right: 0;
     top: 0;
-    -webkit-transition: opacity 400ms ease-in;
-    -moz-transition: opacity 400ms ease-in;
     transition: opacity 400ms ease-in;
     z-index: -1;
     display: none;
@@ -172,6 +172,63 @@ body {
     #more-portrait {
         width: 25% !important;
     }
+
+    .ded {
+        transition: .1s;
+    }
+
+    .ded:hover {
+        width: 500px;
+    }
+
+    .ded:hover .portrait {
+        max-width: 39%;
+        float: left;
+        left: 0;
+        padding: 10px;
+    }
+
+    .ded:hover > .portrait > .more-button {
+        display: unset;
+    }
+
+    .ded > .pd {
+        margin-top: 7px;
+        max-width: 55%;
+        text-align: left;
+    }
+
+    .ded > .pd > .more-button {
+        display: none;
+    }
+
+    #container {
+        padding-top: 60px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    #container::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 60em) {
+    .ded-wrapper {
+        padding: 0 210px 0 0;
+        margin-bottom: -80px;
+        display: inline-block;
+    }
+
+    .ded .pd {
+        float: unset !important;
+    }
+}
+
+.ded > .portrait > .more-button {
+    display: none;
 }
 
 .modal-overlay .modal > .modal-content-wrapper {
