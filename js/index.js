@@ -60,7 +60,7 @@ function loadDatabase() {
         });
         parseDed();
     }, (error) => {
-        document.body.innerHTML = 'Ошибка при подключении к базе данных: ' + error;
+        document.body.innerHTML = 'База данных недоступна: ' + error;
     });
 }
 
@@ -84,7 +84,7 @@ function parseDed() {
     document.querySelectorAll('.ded > img').forEach((img) => {
         img.addEventListener('click', () => {
             (function () {
-                showInfo(img.parentElement);
+                //showInfo(img.parentElement);
             })()
         });
     });
