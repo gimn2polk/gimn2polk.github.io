@@ -177,7 +177,7 @@ function parseDed() {
     });
     if($('#desktop-view').css('display') !== 'none') {
         console.log('Started carousel');
-        $('.ded').hover(() => {
+        $('.ded-wrapper').hover(() => {
             $(container).stop();
         }, () => {
             scrollCarousel(lastScrollWidth);
