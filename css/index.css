@@ -226,6 +226,10 @@ body {
     .ded .pd {
         float: unset !important;
     }
+
+    .desktop-only {
+        display: none !important;
+    }
 }
 
 .ded > .portrait > .more-button {

@@ -75,11 +75,46 @@ function showInfo(ded) {
     document.getElementById('more-wrapper').scrollIntoView();
 }
 
-var smooth = false;
+let smooth = 0;
+let lastDelta = 0;
+let scrollAcceleration = 0;
+let slideTimer;
 
-function parseDed() {
+const scrollLeftAnimation = () => {
+    scrollCarousel(0);
+};
+const scrollRightAnimation = () => {
+    scrollCarousel($('#container').width()*2.6);
+};
+let lastScrollWidth = 0;
+
+function scrollCarousel(width) {
+    lastScrollWidth = width;
+    let container = $('#container');
+    if(container.is(':animated')) {
+        return;
+    }
+    container.animate({
+        scrollLeft: width,
+    }, 24000, () => {
+        if(width === 0) {
+            scrollRightAnimation();
+        } else {
+            scrollLeftAnimation();
+        }
+    });
+}
+
+function initializeApp() {
     document.getElementById('smooth-scroll').addEventListener('change', (e) => {
-        smooth = e.target.checked;
+        if(e.target.checked) {
+            smooth = 1;
+        }
+    });
+    document.getElementById('smooth-scroll-2').addEventListener('change', (e) => {
+        if(e.target.checked) {
+            smooth = 2;
+        }
     });
     let container = document.getElementById('container');
     let scroll = (e) => {
@@ -87,10 +122,29 @@ function parseDed() {
             return;
         }
         let delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-        if(smooth) {
-            console.log('Smooth scroll');
-            scrollAmount = 0;
-            var slideTimer = setInterval(function(){
+        if(slideTimer !== undefined) {
+            if(((delta > 0 && lastDelta > 0) || (delta < 0 && lastDelta < 0)) && scrollAcceleration < 50) {
+                scrollAcceleration += 5;
+                return;
+            } else {
+                window.clearInterval(slideTimer);
+            }
+        }
+        if(smooth === 2) {
+            lastDelta = delta;
+            slideTimer = setInterval(() => {
+                let x = delta*(scrollAcceleration > 0 ? scrollAcceleration : 0);
+                document.getElementById('techinf').innerHTML = ' scroll: ' + x + '; acceleration: ' + (scrollAcceleration > 0 ? scrollAcceleration : 0) + '; ScrollLeft: ' + container.scrollLeft + '; ScrollWidth: ' + container.scrollWidth;
+                container.scrollLeft -= x;
+                scrollAcceleration -= 0.6;
+                if(scrollAcceleration < 0.75) {
+                    window.clearInterval(slideTimer);
+                    slideTimer = undefined;
+                }
+            }, 15);
+        } else if(smooth === 1) {
+            let scrollAmount = 0;
+            slideTimer = setInterval(function(){
                 container.scrollLeft -= delta*10;
                 scrollAmount -= delta*10;
                 if(scrollAmount >= 100){
@@ -98,12 +152,22 @@ function parseDed() {
                 }
             }, 25);
         } else {
-            console.log('Rough scroll');
             container.scrollLeft -= (delta * 50);
         }
     };
-    document.addEventListener('mousewheel', scroll, false);
-    document.addEventListener('DOMMouseScroll', scroll, false);
+    if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        document.addEventListener('DOMMouseScroll', scroll, false);
+    } else {
+        document.addEventListener('mousewheel', scroll, false);
+    }
+}
+
+function test() {
+    let container = document.getElementById('container');
+    container.scrollLeft = 0;
+}
+
+function parseDed() {
     document.querySelectorAll('.more-button').forEach((btn) => {
         btn.addEventListener('click', () => {
             (function () {
@@ -111,6 +175,15 @@ function parseDed() {
             })()
         });
     });
+    if($('#desktop-view').css('display') !== 'none') {
+        console.log('Started carousel');
+        $('.ded').hover(() => {
+            $(container).stop();
+        }, () => {
+            scrollCarousel(lastScrollWidth);
+        });
+        scrollRightAnimation();
+    }
     /*document.querySelectorAll('.ded > img').forEach((img) => {
         img.addEventListener('click', () => {
             (function () {
@@ -128,4 +201,5 @@ window.onload = () => {
     } else {
         parseDed();
     }
+    initializeApp();
 };
