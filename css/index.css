@@ -208,6 +208,7 @@ body {
         overflow-y: hidden;
         -ms-overflow-style: none;
         scrollbar-width: none;
+        /*box-shadow: 6px 0 4px -4px rgba(0, 0, 0, 0.5), -6px 0 4px -4px rgba(0, 0, 0, 0.5);*/
     }
 
     #container::-webkit-scrollbar {

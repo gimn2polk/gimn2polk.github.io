@@ -75,16 +75,32 @@ function showInfo(ded) {
     document.getElementById('more-wrapper').scrollIntoView();
 }
 
+var smooth = false;
+
 function parseDed() {
+    document.getElementById('smooth-scroll').addEventListener('change', (e) => {
+        smooth = e.target.checked;
+    });
     let container = document.getElementById('container');
     let scroll = (e) => {
-        console.log(location.href);
         if(location.hash === '#more') {
             return;
         }
         let delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-        container.scrollLeft -= (delta*50);
-        e.preventDefault();
+        if(smooth) {
+            console.log('Smooth scroll');
+            scrollAmount = 0;
+            var slideTimer = setInterval(function(){
+                container.scrollLeft -= delta*10;
+                scrollAmount -= delta*10;
+                if(scrollAmount >= 100){
+                    window.clearInterval(slideTimer);
+                }
+            }, 25);
+        } else {
+            console.log('Rough scroll');
+            container.scrollLeft -= (delta * 50);
+        }
     };
     document.addEventListener('mousewheel', scroll, false);
     document.addEventListener('DOMMouseScroll', scroll, false);
