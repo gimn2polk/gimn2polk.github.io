@@ -77,7 +77,10 @@ function showInfo(ded) {
     document.getElementById('more-wrapper').scrollIntoView();
 }
 
-let smooth = 0;
+function getMaxScroll(element) {
+    return element.scrollWidth - element.clientWidth
+}
+
 let lastDelta = 0;
 let scrollAcceleration = 0;
 let slideTimer;
@@ -86,7 +89,7 @@ const scrollLeftAnimation = () => {
     scrollCarousel(0);
 };
 const scrollRightAnimation = () => {
-    scrollCarousel(container.scrollWidth - container.clientWidth);
+    scrollCarousel(getMaxScroll(container));
 };
 let lastScrollWidth = 0;
 
@@ -108,60 +111,32 @@ function scrollCarousel(width) {
 }
 
 function initializeApp() {
-    document.getElementById('smooth-scroll').addEventListener('change', (e) => {
-        if(e.target.checked) {
-            smooth = 1;
-        }
-    });
-    document.getElementById('smooth-scroll-2').addEventListener('change', (e) => {
-        if(e.target.checked) {
-            smooth = 2;
-        }
-    });
     let scroll = (e) => {
-        console.log('Scroll!');
         if(location.hash === '#more') {
             return;
         }
         let delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
         if(slideTimer !== undefined) {
-            if(((delta > 0 && lastDelta > 0) || (delta < 0 && lastDelta < 0)) && scrollAcceleration < 50) {
-                console.log('Increase speed');
+            if(((delta > 0 && lastDelta > 0) || (delta < 0 && lastDelta < 0)) && scrollAcceleration < 30) {
                 let amplifier = scrollAcceleration/2.5;
-                scrollAcceleration += (amplifier > 25 ? 25 : amplifier);
+                scrollAcceleration += (scrollAcceleration + amplifier > 25 ? 10 : amplifier);
                 return;
             } else {
-                console.log('Clear interval, resume');
                 window.clearInterval(slideTimer);
             }
         }
-        console.log('Timer === null, continue');
-        if(smooth === 2) {
-            scrollAcceleration = 15;
-            lastDelta = delta;
-            slideTimer = setInterval(() => {
-                let x = delta*(scrollAcceleration > 0 ? scrollAcceleration : 0);
-                console.log('Mouse goes scroll brr');
-                document.getElementById('techinf').innerHTML = ' scroll: ' + x + '; acceleration: ' + (scrollAcceleration > 0 ? scrollAcceleration : 0) + '; ScrollLeft: ' + container.scrollLeft + '; Width: ' + $(container).width();
-                container.scrollLeft -= x;
-                scrollAcceleration -= 0.6;
-                if(scrollAcceleration < 0.75) {
-                    window.clearInterval(slideTimer);
-                    slideTimer = undefined;
-                }
-            }, 15);
-        } else if(smooth === 1) {
-            let scrollAmount = 0;
-            slideTimer = setInterval(function(){
-                container.scrollLeft -= delta*10;
-                scrollAmount -= delta*10;
-                if(scrollAmount >= 100){
-                    window.clearInterval(slideTimer);
-                }
-            }, 25);
-        } else {
-            container.scrollLeft -= (delta * 50);
-        }
+        scrollAcceleration = 15;
+        lastDelta = delta;
+        slideTimer = setInterval(() => {
+            let x = delta*(scrollAcceleration > 0 ? scrollAcceleration : 0);
+            document.getElementById('techinf').innerHTML = ' scroll: ' + x + '; acceleration: ' + (scrollAcceleration > 0 ? scrollAcceleration : 0) + '; ScrollLeft: ' + container.scrollLeft + '; Width: ' + $(container).width();
+            container.scrollLeft -= x;
+            scrollAcceleration -= 0.6;
+            if(scrollAcceleration < 0.75 || container.scrollLeft >= getMaxScroll(container) || container.scrollLeft === 0) {
+                window.clearInterval(slideTimer);
+                slideTimer = undefined;
+            }
+        }, 15);
     };
     if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         document.addEventListener('DOMMouseScroll', scroll, false);
@@ -179,22 +154,22 @@ function parseDed() {
         });
     });
     if($('#desktop-view').css('display') !== 'none') {
-        $('.ded-wrapper').hover(() => {
+        $('.ded-wrapper, .modal-overlay').hover(() => {
             $(container).stop();
         }, () => {
             scrollCarousel(lastScrollWidth);
         });
         scrollRightAnimation();
-    }
-    /*document.querySelectorAll('.ded > img').forEach((img) => {
-        img.addEventListener('click', () => {
-            (function () {
-                if(img.parentElement.matches(':hover')) {
-                    showInfo(img.parentElement);
-                }
-            })()
+        document.querySelectorAll('.ded > .portrait > img').forEach((img) => {
+            img.addEventListener('click', () => {
+                (function () {
+                    if (img.parentElement.matches(':hover')) {
+                        showInfo(img.parentElement.parentElement);
+                    }
+                })()
+            });
         });
-    });*/
+    }
 }
 
 window.onload = () => {
