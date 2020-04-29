@@ -6,6 +6,8 @@
 const database = 'deddb.json';
 const useDb = true;
 
+let container;
+
 function loadJSON(path, success, error) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -26,7 +28,6 @@ function loadJSON(path, success, error) {
 }
 
 function loadDatabase() {
-    let container = document.getElementById('container');
     container.innerHTML = 'Загрузка базы данных, пожалуйста, подождите...';
     loadJSON(database, (data) => {
         container.innerHTML = '';
@@ -85,17 +86,17 @@ const scrollLeftAnimation = () => {
     scrollCarousel(0);
 };
 const scrollRightAnimation = () => {
-    scrollCarousel($('#container').width()*2.6);
+    scrollCarousel(container.scrollWidth - container.clientWidth);
 };
 let lastScrollWidth = 0;
 
 function scrollCarousel(width) {
     lastScrollWidth = width;
-    let container = $('#container');
-    if(container.is(':animated')) {
+    let jcontainer = $('#container');
+    if(jcontainer.is(':animated')) {
         return;
     }
-    container.animate({
+    jcontainer.animate({
         scrollLeft: width,
     }, 24000, () => {
         if(width === 0) {
@@ -117,25 +118,31 @@ function initializeApp() {
             smooth = 2;
         }
     });
-    let container = document.getElementById('container');
     let scroll = (e) => {
+        console.log('Scroll!');
         if(location.hash === '#more') {
             return;
         }
         let delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
         if(slideTimer !== undefined) {
             if(((delta > 0 && lastDelta > 0) || (delta < 0 && lastDelta < 0)) && scrollAcceleration < 50) {
-                scrollAcceleration += 5;
+                console.log('Increase speed');
+                let amplifier = scrollAcceleration/2.5;
+                scrollAcceleration += (amplifier > 25 ? 25 : amplifier);
                 return;
             } else {
+                console.log('Clear interval, resume');
                 window.clearInterval(slideTimer);
             }
         }
+        console.log('Timer === null, continue');
         if(smooth === 2) {
+            scrollAcceleration = 15;
             lastDelta = delta;
             slideTimer = setInterval(() => {
                 let x = delta*(scrollAcceleration > 0 ? scrollAcceleration : 0);
-                document.getElementById('techinf').innerHTML = ' scroll: ' + x + '; acceleration: ' + (scrollAcceleration > 0 ? scrollAcceleration : 0) + '; ScrollLeft: ' + container.scrollLeft + '; ScrollWidth: ' + container.scrollWidth;
+                console.log('Mouse goes scroll brr');
+                document.getElementById('techinf').innerHTML = ' scroll: ' + x + '; acceleration: ' + (scrollAcceleration > 0 ? scrollAcceleration : 0) + '; ScrollLeft: ' + container.scrollLeft + '; Width: ' + $(container).width();
                 container.scrollLeft -= x;
                 scrollAcceleration -= 0.6;
                 if(scrollAcceleration < 0.75) {
@@ -161,11 +168,6 @@ function initializeApp() {
     } else {
         document.addEventListener('mousewheel', scroll, false);
     }
-}
-
-function test() {
-    let container = document.getElementById('container');
-    container.scrollLeft = 0;
 }
 
 function parseDed() {
@@ -196,6 +198,7 @@ function parseDed() {
 }
 
 window.onload = () => {
+    container = document.getElementById('container');
     if(useDb) {
         loadDatabase();
     } else {
