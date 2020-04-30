@@ -173,6 +173,7 @@ function parseDed() {
 }
 
 window.onload = () => {
+    location.hash = '';
     container = document.getElementById('container');
     if(useDb) {
         loadDatabase();
