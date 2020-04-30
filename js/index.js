@@ -86,15 +86,15 @@ let scrollAcceleration = 0;
 let slideTimer;
 
 function scrollCarousel() {
-    let width;
+    let current = Math.ceil(container.scrollLeft);
     let max = getMaxScroll(container);
-    if(container.scrollLeft === 0 && width === 0) {
-        width = max;
-    } else if(container.scrollLeft === max) {
+    let width;
+    if(current === max) {
         width = 0;
     } else {
-        width = max - container.scrollLeft;
+        width = max;
     }
+    console.log('Width: ' + width + ' | Max: ' + max + ' ScrollLeft: ' + current);
     let jcontainer = $('#container');
     if(jcontainer.is(':animated')) {
         return;
@@ -125,7 +125,7 @@ function initializeApp() {
         lastDelta = delta;
         slideTimer = setInterval(() => {
             let x = delta*(scrollAcceleration > 0 ? scrollAcceleration : 0);
-            document.getElementById('techinf').innerHTML = ' scroll: ' + x + '; acceleration: ' + (scrollAcceleration > 0 ? scrollAcceleration : 0) + '; ScrollLeft: ' + container.scrollLeft + '; Width: ' + $(container).width();
+            document.getElementById('techinf').innerHTML = ' scroll: ' + Math.ceil(x) + '; acceleration: ' + (scrollAcceleration > 0 ? Math.ceil(scrollAcceleration) : 0) + '; ScrollLeft: ' + Math.ceil(container.scrollLeft) + '; Width: ' + $(container).width();
             container.scrollLeft -= x;
             scrollAcceleration -= 0.6;
             if(scrollAcceleration < 0.75 || container.scrollLeft >= getMaxScroll(container) || container.scrollLeft === 0) {
