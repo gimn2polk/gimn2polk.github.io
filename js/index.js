@@ -154,7 +154,7 @@ function parseDed() {
         });
     });
     if($('#desktop-view').css('display') !== 'none') {
-        $('.ded-wrapper, .modal-overlay').hover(() => {
+        $('#container, .ded-wrapper, .modal-overlay').hover(() => {
             $(container).stop();
         }, () => {
             scrollCarousel(lastScrollWidth);

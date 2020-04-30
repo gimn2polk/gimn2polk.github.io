@@ -170,12 +170,6 @@ body {
         min-width: 100%;
     }
 
-    #container {
-        margin: 25px 0 25px 0;
-        height: 450px;
-        background: rgba(175, 175, 175, 0.75);
-    }
-
     .modal-overlay .modal {
         height: 75%;
         margin: 5% auto;
@@ -219,6 +213,9 @@ body {
     }
 
     #container {
+        margin: 25px 0 25px 0;
+        height: 450px;
+        background: rgba(175, 175, 175, 0.75);
         padding-top: 60px;
         overflow-x: scroll;
         overflow-y: hidden;
