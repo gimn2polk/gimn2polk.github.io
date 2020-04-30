@@ -94,6 +94,7 @@ const scrollRightAnimation = () => {
 let lastScrollWidth = 0;
 
 function scrollCarousel(width) {
+    width = width = 0 ? 0 : getMaxScroll(container)-container.scrollLeft;
     lastScrollWidth = width;
     let jcontainer = $('#container');
     if(jcontainer.is(':animated')) {
