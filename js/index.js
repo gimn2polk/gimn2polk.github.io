@@ -44,7 +44,7 @@ function loadDatabase() {
                     '<div class="ded-wrapper">' +
                     ' <div class="ded" data-name="' + name + '" data-lived="' + ded.lived + '" data-full="' + full + '">' +
                     '   <div class="portrait">' +
-                    '    <img src="portraits/' + name + '.png"  alt="' + name + ' ' + lived +'"/>' +
+                    '    <img src="portraits/' + name + '.png" onerror="portraitError(this)" alt="' + name + ' ' + lived +'"/>' +
                     '    <p class="name">' + name + '<span>' + lived + '</span></p>' +
                     '    <a class="more-button">Подробнее</a></div>' + (text === undefined ? "" :
                     '   <div class="pd">' +
@@ -163,6 +163,10 @@ function parseDed() {
             });
         });
     }
+}
+
+function portraitError(portrait) {
+    portrait.src = 'images/default.png';
 }
 
 window.onload = () => {
