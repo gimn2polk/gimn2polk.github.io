@@ -172,6 +172,7 @@ body {
 
     #container {
         margin: 25px 0 25px 0;
+        height: 450px;
     }
 
     .modal-overlay .modal {
