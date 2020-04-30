@@ -160,6 +160,20 @@ body {
 }
 
 @media (min-width: 60em) {
+    body {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #app {
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    #container {
+        margin: 25px 0 25px 0;
+    }
+
     .modal-overlay .modal {
         height: 75%;
         margin: 5% auto;
