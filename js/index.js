@@ -94,7 +94,6 @@ function scrollCarousel() {
     } else {
         width = max;
     }
-    console.log('Width: ' + width + ' | Max: ' + max + ' ScrollLeft: ' + current);
     let jcontainer = $('#container');
     if(jcontainer.is(':animated')) {
         return;
@@ -125,7 +124,6 @@ function initializeApp() {
         lastDelta = delta;
         slideTimer = setInterval(() => {
             let x = delta*(scrollAcceleration > 0 ? scrollAcceleration : 0);
-            document.getElementById('techinf').innerHTML = ' scroll: ' + Math.ceil(x) + '; acceleration: ' + (scrollAcceleration > 0 ? Math.ceil(scrollAcceleration) : 0) + '; ScrollLeft: ' + Math.ceil(container.scrollLeft) + '; Width: ' + Math.ceil($(container).width());
             container.scrollLeft -= x;
             scrollAcceleration -= 0.6;
             if(scrollAcceleration < 0.75 || container.scrollLeft >= getMaxScroll(container) || container.scrollLeft === 0) {
