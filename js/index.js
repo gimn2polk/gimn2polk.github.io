@@ -61,7 +61,6 @@ function loadDatabase() {
         gallery.forEach((entry) => {
             container.innerHTML += entry.value;
         });
-        document.getElementById('techinf').innerHTML = gallery.length + ' портретов загружено';
         parseDed();
     }, (error) => {
         document.body.innerHTML = 'База данных недоступна: ' + error;
