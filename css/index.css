@@ -173,6 +173,7 @@ body {
     #container {
         margin: 25px 0 25px 0;
         height: 450px;
+        background: rgba(175, 175, 175, 0.75);
     }
 
     .modal-overlay .modal {
