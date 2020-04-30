@@ -227,6 +227,10 @@ body {
     #container::-webkit-scrollbar {
         display: none;
     }
+
+    .mobile-only {
+        display: none !important;
+    }
 }
 
 @media only screen and (max-width: 60em) {
