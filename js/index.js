@@ -117,7 +117,7 @@ function initializeApp() {
         }
         let delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
         if(slideTimer !== undefined) {
-            if(((delta > 0 && lastDelta > 0) || (delta < 0 && lastDelta < 0)) && scrollAcceleration < 30) {
+            if(((delta > 0 && lastDelta > 0) || (delta < 0 && lastDelta < 0)) && scrollAcceleration < 28) {
                 let amplifier = scrollAcceleration/2.5;
                 scrollAcceleration += (scrollAcceleration + amplifier > 25 ? 10 : amplifier);
                 return;
