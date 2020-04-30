@@ -85,17 +85,16 @@ let lastDelta = 0;
 let scrollAcceleration = 0;
 let slideTimer;
 
-const scrollLeftAnimation = () => {
-    scrollCarousel(0);
-};
-const scrollRightAnimation = () => {
-    scrollCarousel(getMaxScroll(container));
-};
-let lastScrollWidth = 0;
-
-function scrollCarousel(width) {
-    width = width = 0 ? 0 : getMaxScroll(container)-container.scrollLeft;
-    lastScrollWidth = width;
+function scrollCarousel() {
+    let width;
+    let max = getMaxScroll(container);
+    if(container.scrollLeft === 0 && width === 0) {
+        width = max;
+    } else if(container.scrollLeft === max) {
+        width = 0;
+    } else {
+        width = max - container.scrollLeft;
+    }
     let jcontainer = $('#container');
     if(jcontainer.is(':animated')) {
         return;
@@ -103,11 +102,7 @@ function scrollCarousel(width) {
     jcontainer.animate({
         scrollLeft: width,
     }, 24000, () => {
-        if(width === 0) {
-            scrollRightAnimation();
-        } else {
-            scrollLeftAnimation();
-        }
+        scrollCarousel();
     });
 }
 
@@ -158,9 +153,9 @@ function parseDed() {
         $('#container, .ded-wrapper, .modal-overlay').hover(() => {
             $(container).stop();
         }, () => {
-            scrollCarousel(lastScrollWidth);
+            scrollCarousel();
         });
-        scrollRightAnimation();
+        scrollCarousel();
         document.querySelectorAll('.ded > .portrait > img').forEach((img) => {
             img.addEventListener('click', () => {
                 (function () {
