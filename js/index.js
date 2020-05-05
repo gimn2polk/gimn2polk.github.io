@@ -99,7 +99,7 @@ function scrollCarousel() {
     }
     jcontainer.animate({
         scrollLeft: width,
-    }, 24000, () => {
+    }, 32000, () => {
         scrollCarousel();
     });
 }
@@ -162,6 +162,12 @@ function parseDed() {
                 })()
             });
         });
+        let audio = new Audio('sound/Журавли.mp3');
+        audio.autoplay = true;
+        audio.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
     }
 }
 
