@@ -8,28 +8,9 @@ const useDb = true;
 
 let container;
 
-function loadJSON(path, success, error) {
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState === XMLHttpRequest.DONE) {
-            if(xhr.status === 200) {
-                if(success) {
-                    success(JSON.parse(xhr.responseText));
-                }
-            } else {
-                if(error) {
-                    error(xhr);
-                }
-            }
-        }
-    };
-    xhr.open('GET', path, true);
-    xhr.send();
-}
-
 function loadDatabase() {
     container.innerHTML = 'Загрузка базы данных, пожалуйста, подождите...';
-    loadJSON(database, (data) => {
+    $.getJSON(database, (data) => {
         container.innerHTML = '';
         let gallery = [];
         data.ded.forEach((ded) => {
