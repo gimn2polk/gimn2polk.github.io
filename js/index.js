@@ -84,15 +84,20 @@ let lastDelta = 0;
 let scrollAcceleration = 0;
 let slideTimer;
 
+let carouselDirection = -1;
+
 function scrollCarousel() {
+    let width;
     let current = Math.ceil(container.scrollLeft);
     let max = Math.ceil(getMaxScroll(container));
-    let width;
     if(current === max) {
         width = 0;
-    } else {
+    } else if(current === 0) {
         width = max;
+    } else {
+        width = carouselDirection === -1 ? max : carouselDirection;
     }
+    carouselDirection = width;
     let jcontainer = $('#container');
     if(jcontainer.is(':animated')) {
         return;
