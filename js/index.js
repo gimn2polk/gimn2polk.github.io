@@ -146,6 +146,7 @@ function parseDed() {
             })()
         });
     });
+    let audio = document.getElementById('music');
     if($('#desktop-view').css('display') !== 'none') {
         $('#container, .ded-wrapper, .modal-overlay').hover(() => {
             $(container).stop();
@@ -162,12 +163,17 @@ function parseDed() {
                 })()
             });
         });
-        let audio = new Audio('sound/Журавли.mp3');
-        audio.autoplay = true;
-        audio.addEventListener('ended', function() {
-            this.currentTime = 0;
-            this.play();
-        }, false);
+        document.body.addEventListener('click', () => {
+           if(audio.paused) {
+               audio.play();
+           }
+        });
+        document.body.click();
+        setTimeout(() => {
+            audio.play();
+        }, 5000);
+    } else {
+        audio.remove();
     }
 }
 
