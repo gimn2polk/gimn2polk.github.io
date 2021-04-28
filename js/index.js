@@ -1,6 +1,7 @@
 /**
  * April 25, 2020
- * Copyright, Mikhail K., 2020
+ * April 28, 2021
+ * Copyright, Mikhail K., 2020-2021
  */
 
 const database = 'deddb.json';
@@ -42,18 +43,10 @@ function loadDatabase() {
         `
       });
     });
-    gallery.sort(function(a, b){
-      if(a.name < b.name) { return -1; }
-      if(a.name > b.name) { return 1; }
-      return 0;
-    });
-    gallery.forEach((entry) => {
-      container.innerHTML += entry.value;
-    });
+    gallery.sort((a, b) => a.name.localeCompare(b));
+    gallery.forEach((entry) => container.innerHTML += entry.value);
     parseDed();
-  }, (error) => {
-    document.body.innerHTML = 'База данных недоступна: ' + error;
-  });
+  }, (error) => document.write('База данных недоступна: ' + error));
 }
 
 function showInfo(ded) {
@@ -88,9 +81,7 @@ function scrollCarousel() {
   }
   carouselDirection = width;
   let jcontainer = $('#container');
-  if(jcontainer.is(':animated')) {
-    return;
-  }
+  if(jcontainer.is(':animated')) return;
   jcontainer.animate({
     scrollLeft: width,
   }, 32000, () => {
@@ -100,9 +91,7 @@ function scrollCarousel() {
 
 function initializeApp() {
   let scroll = (e) => {
-    if(location.hash === '#more') {
-      return;
-    }
+    if(location.hash === '#more') return;
     let delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
     if(slideTimer !== undefined) {
       if(((delta > 0 && lastDelta > 0) || (delta < 0 && lastDelta < 0)) && scrollAcceleration < 28) {
@@ -133,24 +122,16 @@ function initializeApp() {
 }
 
 function parseDed() {
-  document.querySelectorAll('.more-button').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      (function () {
-        showInfo(btn.parentElement.parentElement);
-      })()
-    });
-  });
+  document.querySelectorAll('.more-button').forEach((btn) =>
+    btn.addEventListener('click', () => (() => showInfo(btn.parentElement.parentElement))())
+  );
   let audio = document.getElementById('music');
   if($('#desktop-view').css('display') !== 'none') {
-    $('#container, .ded-wrapper, .modal-overlay').hover(() => {
-      $(container).stop();
-    }, () => {
-      scrollCarousel();
-    });
+    $('#container, .ded-wrapper, .modal-overlay').hover(() => $(container).stop(), () => scrollCarousel());
     scrollCarousel();
     document.querySelectorAll('.ded > .portrait > img').forEach((img) => {
       img.addEventListener('click', () => {
-        (function () {
+        (() => {
           if (img.parentElement.matches(':hover')) {
             showInfo(img.parentElement.parentElement);
           }
@@ -158,14 +139,10 @@ function parseDed() {
       });
     });
     document.body.addEventListener('click', () => {
-      if(audio.paused) {
-        audio.play();
-      }
+      if(audio.paused) audio.play()
     });
     document.body.click();
-    setTimeout(() => {
-      audio.play();
-    }, 5000);
+    setTimeout(() => audio.play(), 5000);
   } else {
     audio.remove();
   }
