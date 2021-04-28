@@ -124,6 +124,7 @@ body {
     font-family: 'Helvetica', 'Arial', sans-serif;
     cursor: pointer;
     transition: .2s;
+    user-select: none;
 }
 
 .more-button:hover {
@@ -296,4 +297,8 @@ body {
 
 .ded img, #more-portrait {
     filter: grayscale(95%);
+}
+
+.no-selection {
+    user-select: none;
 }
