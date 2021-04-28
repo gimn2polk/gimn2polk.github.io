@@ -1,56 +1,56 @@
-﻿<!-- 24 April, 2020  | Copyright, Mikhail K. | Rev. 28 April, 2021 -->
+﻿<!-- 24 April, 2020 | Copyright, Mikhail K. | Rev. 28 April, 2021 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бессмертный полк Гимназии №2</title>
-    <script>
-        var userAgent = navigator.userAgent;
-        if(userAgent.indexOf("MSIE ") > -1 || userAgent.indexOf("Trident/") > -1) {
-            alert('Браузер Internet Explorer не поддерживается');
-        }
-    </script>
-    <script src="js/jquery-3.5.0.min.js"></script>
-    <script src="js/index.js"></script>
-    <link rel="stylesheet" href="css/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бессмертный полк Гимназии №2</title>
+  <script>
+    var userAgent = navigator.userAgent;
+    if(userAgent.indexOf("MSIE ") > -1 || userAgent.indexOf("Trident/") > -1) {
+      alert('Браузер Internet Explorer не поддерживается');
+    }
+  </script>
+  <script src="js/jquery-3.5.0.min.js"></script>
+  <script src="js/index.js"></script>
+  <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
 
 <div id="app">
-    <i id="desktop-view" class="desktop-only" style="position: absolute;"></i>
-    <i id="mobile-view" class="mobile-only" style="position: absolute;"></i>
-    <h1 class="no-selection" style="font-family: monospace;font-size: 30px;">Бессмертный&nbsp;полк</h1>
-    <div id="container"></div>
-    <div class="no-selection">
-        <h3 style="font-family: monospace;font-size: 25px; margin: 0;">10А&nbsp;/&nbsp;10Б</h3>
-        <h4 style="font-family: monospace;font-size: 20px; margin: 0;">Гимназия&nbsp;№2</h4>
-        <br class="mobile-only">
-    </div>
+  <i id="desktop-view" class="desktop-only" style="position: absolute;"></i>
+  <i id="mobile-view" class="mobile-only" style="position: absolute;"></i>
+  <h1 class="no-selection" style="font-family: monospace;font-size: 30px;">Бессмертный&nbsp;полк</h1>
+  <div id="container"></div>
+  <div class="no-selection">
+    <h3 style="font-family: monospace;font-size: 25px; margin: 0;">10А&nbsp;/&nbsp;10Б</h3>
+    <h4 style="font-family: monospace;font-size: 20px; margin: 0;">Гимназия&nbsp;№2</h4>
+    <br class="mobile-only">
+  </div>
 </div>
 
 <div id="more" class="modal-overlay">
-    <div class="modal">
-        <a href="#" class="close no-selection">&times;</a>
-        <div id="more-wrapper" class="modal-content-wrapper">
-            <div class="model-content" style="padding: 3em">
-                <img id="more-portrait" onerror="portraitError(this)" style="float: left; margin: 0 28px 12px 0; width: 100%; height: auto;" />
-                <div>
-                    <div>
-                        <span id="more-name"></span><br><span id="more-lived"></span>
-                    </div>
-                    <br>
-                    <div id="more-text"></div>
-                    <br>
-                </div>
-            </div>
+  <div class="modal">
+    <a href="#" class="close no-selection">&times;</a>
+    <div id="more-wrapper" class="modal-content-wrapper">
+      <div class="model-content" style="padding: 3em">
+        <img id="more-portrait" onerror="portraitError(this)" style="float: left; margin: 0 28px 12px 0; width: 100%; height: auto;" />
+        <div>
+          <div>
+            <span id="more-name"></span><br><span id="more-lived"></span>
+          </div>
+          <br>
+          <div id="more-text"></div>
+          <br>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <audio id="music" autoplay loop>
-    <source src="audio/Журавли.mp3" type="audio/mp3">
+  <source src="audio/Журавли.mp3" type="audio/mp3">
 </audio>
 
 </body>
