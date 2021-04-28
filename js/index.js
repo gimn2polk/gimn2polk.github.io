@@ -21,18 +21,26 @@ function loadDatabase() {
       if(full === undefined) {
         full = text;
       }
-      gallery.push({name: name, value:
-          '<div class="ded-wrapper">' +
-          ' <div class="ded" data-name="' + name + '" data-lived="' + ded.lived + '" data-full="' + full + '">' +
-          '  <div class="portrait">' +
-          '  <img src="portraits/' + name + '.png" onerror="portraitError(this)" alt="' + name + ' ' + lived +'"/>' +
-          '  <p class="name">' + name + '<span>' + lived + '</span></p>' +
-          '  <a class="more-button">Подробнее</a></div>' + (text === undefined ? "" :
-          '  <div class="pd">' +
-          '  ' + text +
-          '  <br><br><a class="more-button">Подробнее</a></div>') +
-          ' </div>' +
-          '</div>'});
+      gallery.push({
+        name: name,
+        value: `
+        <div class="ded-wrapper">
+          <div class="ded" data-name="${name}" data-lived="${ded.lived}" data-full="${full}">
+            <div class="portrait">
+              <img src="portraits/${name}.png" onerror="portraitError(this)" alt="${name} ${lived}"/>
+              <p class="name">${name}<span>${lived}</span></p>
+              <a class="more-button">Подробнее</a>
+            </div>
+            ${text === undefined ? '' : `
+            <div class="pd">
+              ${text}<br><br>
+              <a class="more-button">Подробнее</a>
+            </div>
+            `}
+          </div>
+        </div>
+        `
+      });
     });
     gallery.sort(function(a, b){
       if(a.name < b.name) { return -1; }
