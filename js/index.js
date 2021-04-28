@@ -43,7 +43,7 @@ function loadDatabase() {
         `
       });
     });
-    gallery.sort((a, b) => a.name.localeCompare(b));
+    gallery.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
     gallery.forEach((entry) => container.innerHTML += entry.value);
     parseDed();
   }, (error) => document.write('База данных недоступна: ' + error));
@@ -84,9 +84,7 @@ function scrollCarousel() {
   if(jcontainer.is(':animated')) return;
   jcontainer.animate({
     scrollLeft: width,
-  }, 32000, () => {
-    scrollCarousel();
-  });
+  }, 32000, () => scrollCarousel());
 }
 
 function initializeApp() {
